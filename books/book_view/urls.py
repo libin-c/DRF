@@ -1,8 +1,5 @@
-from . import views
+from . import views, views_genericapiviews, views_modelmixinv, views_modelchildmixin, views_viewset,views_genericviewset
 from django.conf.urls import url, include
-from . import views_genericapiviews
-from . import views_modelmixinv
-from . import views_modelchildmixin
 
 urlpatterns = [
 
@@ -15,6 +12,14 @@ urlpatterns = [
     # url(r'^books_views/$', views_modelmixinv.BooksView.as_view()),
     # url(r'^books_views/(?P<pk>\d+)/$', views_modelmixinv.BookView.as_view()),
 
-    url(r'^books_views/$', views_modelchildmixin.BooksView.as_view()),
-    url(r'^books_views/(?P<pk>\d+)/$', views_modelchildmixin.BookView.as_view()),
+    # url(r'^books_views/$', views_modelchildmixin.BooksView.as_view()),
+    # url(r'^books_views/(?P<pk>\d+)/$', views_modelchildmixin.BookView.as_view()),
+
+    # url(r'^books_views/$', views_viewset.BooksView.as_view({'get':'list','post':'create'})),
+    # url(r'^books_views/(?P<pk>\d+)/$', views_viewset.BookView.as_view({'get':'retrieve','put':'update','delete':'destroy'})),
+
+    url(r'^books_views/$', views_genericviewset.BooksView.as_view({'get': 'list', 'post': 'create'})),
+    url(r'^books_views/(?P<pk>\d+)/$',
+        views_genericviewset.BookView.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
+
 ]
