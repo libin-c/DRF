@@ -19,4 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('book.urls', namespace='book')),
+    url(r'^', include('book_serializer.urls', namespace='book_serializer')),
+    url(r'^', include('book_view.urls', namespace='book_view')),
 ]

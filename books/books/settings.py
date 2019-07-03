@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'book.apps.BookConfig',
+    'rest_framework',
+    'book_serializer.apps.BookSerializerConfig',
+    'book_view.apps.BookViewConfig',
 ]
 
 MIDDLEWARE = [
