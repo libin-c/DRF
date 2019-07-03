@@ -1,4 +1,4 @@
-# from . import views
+from . import views
 from django.conf.urls import url, include
 from . import views_genericapiviews
 

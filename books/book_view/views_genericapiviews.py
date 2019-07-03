@@ -6,7 +6,7 @@ from rest_framework.generics import GenericAPIView
 
 
 from book.models import BookInfo, HeroInfo
-from book_serializer.serializers import BookMedolSerializer
+from book_serializer.serializers import BookMedolSerializer,BookSerializer
 
 
 class BooksView(GenericAPIView):
@@ -20,9 +20,9 @@ class BooksView(GenericAPIView):
 
     # 01 显示所有图书
     def get(self, request):
-        # 获得查询集数据
-        books = self.queryset()
-        ser = self.serializer_class(books, many=True)
+        # 获得查询集所有数据
+        books = self.get_queryset()
+        ser = self.get_serializer(books, many=True)
 
         return Response(ser.data)
 
@@ -31,7 +31,7 @@ class BooksView(GenericAPIView):
         books_dict = request.data
 
         try:
-            ser = self.serializer_class(books_dict, many=True)
+            ser = self.get_serializer(data=books_dict)
             ser.is_valid(raise_exception=True)
         except:
             return Response({'error': ser.errors})
@@ -55,7 +55,7 @@ class BookView(GenericAPIView):
             book = BookInfo.objects.get(id=pk)
         except:
             return Response({'error': '查询的数据不存在'})
-        ser = self.serializer_class(book)
+        ser = self.get_serializer(book)
 
         return Response(ser.data)
 
@@ -71,7 +71,7 @@ class BookView(GenericAPIView):
         book.save()
         # 2.0 验证数据
         try:
-            ser = self.serializer_class(book, data=book_dict)
+            ser = self.get_serializer(book, data=book_dict)
             ser.is_valid(raise_exception=True)
         except:
             return Response({'error': ser.errors})
