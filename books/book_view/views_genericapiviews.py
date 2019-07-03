@@ -45,14 +45,14 @@ class BookView(GenericAPIView):
     单一图书操作
     '''
     #    指定视图使用的查寻集
-    # queryset = BookInfo.objects.get(id=None)
+    queryset = BookInfo.objects.all()
     #   指定视图使用的序列化器
     serializer_class = BookMedolSerializer
 
     # 01 显示单一图书
     def get(self, request, pk):
         try:
-            book = BookInfo.objects.get(id=pk)
+            book = self.get_object()
         except:
             return Response({'error': '查询的数据不存在'})
         ser = self.get_serializer(book)
@@ -65,7 +65,7 @@ class BookView(GenericAPIView):
 
         book_dict = request.data
         try:
-            book = BookInfo.objects.get(id=pk)
+            book = self.get_object()
         except:
             return Response({'error': "查询的图书不存在"})
         book.save()
@@ -86,7 +86,7 @@ class BookView(GenericAPIView):
 
         # 01 逻辑删除
         try:
-            book = BookInfo.objects.get(id=pk)
+            book = self.get_object()
         except:
             return Response({'error': '查询的数据不存在'})
         book.is_delete = True
