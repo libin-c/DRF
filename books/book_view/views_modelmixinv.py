@@ -20,6 +20,8 @@ class BooksView(GenericAPIView, ListModelMixin, CreateModelMixin):
     #   指定视图使用的序列化器
     serializer_class = BookMedolSerializer
 
+    throttle_scope = 'contacts'
+
     # 01 显示所有图书
     def get(self, request):
         # 获得查询集所有数据
@@ -37,6 +39,8 @@ class BookView(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyMode
     queryset = BookInfo.objects.all()
     #   指定视图使用的序列化器
     serializer_class = BookMedolSerializer
+
+    throttle_scope = 'uploads'
 
     # 01 显示单一图书
     def get(self, request, pk):
